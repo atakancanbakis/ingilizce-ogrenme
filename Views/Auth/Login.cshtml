@@ -1,0 +1,124 @@
+﻿@model IngilizceOgreniyorum.Models.UserLoginArgs;
+
+@{
+    ViewData["Title"] = "Home Page";
+    Layout = "~/Views/Shared/_AuthLayout.cshtml";
+}
+
+
+<style>
+    /* Temel Stil Dosyası */
+    body {
+        background-color: darkcyan;
+    }
+
+    .anasayfabasligi {
+        background-color: aquamarine;
+        border: 10px solid darkblue;
+        padding: 15px;
+        border-radius: 150px;
+        text-align: center;
+        margin: 50px,;
+    }
+
+    /* Giris ekranını sağ yukarı taşıma */
+    #girisEkrani {
+        position: fixed;
+        top: 270px; /* Yukarıdan 10px mesafede */
+        right: 650px; /* Sağdan 10px mesafede */
+        border: 10px solid darkblue;
+        background-color: #ffffff;
+        padding: 20px;
+        border-radius: 10px;
+        text-align: center;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    #adminPanel {
+        position: fixed;
+        top: 270px; /* Yukarıdan 10px mesafede */
+        right: 400px; /* Sağdan 10px mesafede */
+        background-color: #ffffff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+</style>
+<div class="anasayfabasligi">
+    <h1 class="mt-2 mt-2">İngilizce Öğrenme Ekranına Gitmek İçin Giriş Yapınız</h1>
+
+    <!-- Giriş Ekranı -->
+    <div id="girisEkrani">
+        <h2>Giriş Ekranı</h2>
+        <form id="loginForm" method="post" asp-area="" asp-controller="Auth" asp-action="Login">
+            <div class="form-group">
+                <label for="email">E-posta:</label>
+                <input type="text" class="form-control" id="email" required asp-for="Email">
+            </div>
+            <div class="form-group">
+                <label for="password">Parola:</label>
+                <input type="password" class="form-control" id="password" required asp-for="Password">
+            </div>
+            <button type="submit" class="btn btn-primary">Giriş Yap</button>
+            <a href="/Auth/Register" class="btn btn-primary">Kayıt Ol</a>
+        </form>
+    </div>
+
+    <!-- Admin Paneli -->
+    <div id="adminPanel" style="display: none;">
+        <h2>Admin Paneli</h2>
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="username">Admin Kullanıcı Adı:</label>
+                <input type="text" class="form-control" id="username" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Parola:</label>
+                <input type="password" class="form-control" id="password" required>
+            </div>
+            <button type="button" class="btn btn-primary" onclick="login()">Giriş Yap</button>
+        </form>
+        <!-- Admin paneli içeriği buraya gelecek -->
+    </div>
+
+    <!-- Kullanıcı Menüleri -->
+    <div id="userMenus" style="display: none;">
+        <h2>Kullanıcı Menüleri</h2>
+        <ul>
+            <li><a href="#" onclick="showContent('stories')">İngilizce Hikayeler</a></li>
+            <li><a href="#" onclick="showContent('grammar')">İngilizce Gramer</a></li>
+            <li><a href="#" onclick="showContent('idioms')">İngilizce Deyimler</a></li>
+        </ul>
+    </div>
+
+    <!-- İçerik Gösterim Alanı -->
+    <div id="contentArea" style="display: none;">
+        <h3>İçerik Başlığı</h3>
+        <p>İçerik içeriği buraya gelecek.</p>
+        <button class="btn btn-success" onclick="likeContent()">Beğen</button>
+        <button class="btn btn-danger" onclick="dislikeContent()">Beğenme</button>
+    </div>
+
+    <!-- Kullanıcı Profili ve İletişim Formu -->
+    <div id="userProfile" style="display: none;">
+        <h2>Kullanıcı Profili</h2>
+        <!-- Kullanıcı profili içeriği buraya gelecek -->
+        <button class="btn btn-primary" onclick="showFeedbackForm()">İletişim Formu</button>
+    </div>
+
+    <!-- İletişim Formu -->
+    <div id="feedbackForm" style="display: none;">
+        <h2>İletişim Formu</h2>
+        <form id="contactForm">
+            <div class="form-group">
+                <label for="feedbackMessage">Mesajınız:</label>
+                <textarea class="form-control" id="feedbackMessage" rows="3" required></textarea>
+            </div>
+            <button type="button" class="btn btn-primary" onclick="sendFeedback()">Gönder</button>
+        </form>
+    </div>
+</div>
+
+
+
